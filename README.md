@@ -1,7 +1,6 @@
 # Creating Ankis based on your Kindle highlights
-Fetches Kindle highlights, selects the most relevant highlights, and turns them into Anki cards.
 
-This project fetches Kindle highlights from Readwise, selects the most relevant highlights using Claude, and turns them into Anki cards.
+Fetches Kindle highlights from Readwise, selects the most relevant highlights using Claude, and turns them into Anki cards.
 
 ## Prerequisites
 
@@ -18,7 +17,7 @@ This project fetches Kindle highlights from Readwise, selects the most relevant 
 pip install -r requirements.txt
 ```
 
-3. Create a `.env` file in the project root and add your API keys:
+3. Create a `.env` file and add your API keys:
 
 ```
 ANTHROPIC_API_KEY=your_anthropic_api_key
