@@ -45,10 +45,10 @@ Once you have the book ID, you can create an Anki deck.
 
 ### Helper scripts
 
-- `show_meta.py`: Show Readwise metadata for a book. Simply use like so:
+- `show_metadata.py`: Show Readwise metadata for a book. Simply use like so:
 
 ```bash
-./show_meta.py <book_id>
+./show_metadata.py <book_id>
 ```
 
 ## Project Structure
