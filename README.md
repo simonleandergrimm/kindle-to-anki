@@ -36,12 +36,20 @@ To fetch a book's highlights from Readwise, you need to know its Readwise ID. To
 Once you have the book ID, you can create an Anki deck.
 
 ```bash
-python create_deck.py --book_id <book_id> --max-cards <max_cards> --deck_name <deck_name>
+./create_deck.py --book_id <book_id> --max-cards <max_cards> --deck_name <deck_name>
 ```
 
 - `book_id`: The ID of the book in Readwise (required)
 - `max-cards`: Maximum number of cards to generate (default: 20)
 - `deck_name`: Name of the Anki deck to create (default: book title)
+
+### Helper scripts
+
+- `show_meta.py`: Show Readwise metadata for a book. Simply use like so:
+
+```bash
+./show_meta.py <book_id>
+```
 
 ## Project Structure
 
