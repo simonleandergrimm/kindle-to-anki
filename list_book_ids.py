@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-
-import genanki
 import utils
 import argparse
-from typing import Tuple, Dict, List
+
 
 
 def main():
