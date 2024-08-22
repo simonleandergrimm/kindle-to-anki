@@ -27,7 +27,13 @@ READWISE_TOKEN=your_readwise_token
 
 ## Usage
 
-To create an Anki deck from a book's highlights:
+To fetch a book's highlights from Readwise, you need to know its Readwise ID. To list all books and their IDs present in your Readwise account do:
+
+```bash
+./list_book_ids.py
+```
+
+Once you have the book ID, you can create an Anki deck.
 
 ```bash
 python create_deck.py --book_id <book_id> --max-cards <max_cards> --deck_name <deck_name>
@@ -36,12 +42,6 @@ python create_deck.py --book_id <book_id> --max-cards <max_cards> --deck_name <d
 - `book_id`: The ID of the book in Readwise (required)
 - `max-cards`: Maximum number of cards to generate (default: 20)
 - `deck_name`: Name of the Anki deck to create (default: book title)
-
-To list book IDs in your Readwise account do
-
-```bash
-./list_book_ids.py
-```
 
 ## Project Structure
 
