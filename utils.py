@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from readwise import Readwise
 from typing import Dict, List
 
-DEBUG = False
+DEBUG = True
 
 
 def load_env_variables():
@@ -209,11 +209,13 @@ def select_highlights(
             "highlights":
                 "757117853": {{
                     "description": "The Israelis reaction to the White Paper.",
-                    "highlight": "the Jews of Palestine created new vehicles for agrarian settlement (the communal kibbutz and cooperative moshav), a viable socialist economy with systems for national health, reforestation, and infrastructure development, a respectable university, and a symphony orchestra\u2014and to defend them all, an underground citizens\u2019 army, the Haganah."
+                    "highlight": "the Jews of Palestine created new vehicles for agrarian settlement (the communal kibbutz and cooperative moshav), a viable socialist economy with systems for national health, reforestation, and infrastructure development, a respectable university, and a symphony orchestra\u2014and to defend them all, an underground citizens\u2019 army, the Haganah.",
+                    "location": 290
                 }},
                 "757117854": {{
                     "description": "Another description",
-                    "highlight": "Another highlight."
+                    "highlight": "Another highlight.",
+                    "location": 325
                 }}
         }}
 
@@ -223,7 +225,7 @@ def select_highlights(
         - Prioritize events, important conceptual details, and key insights.
         - Avoid generic information or simple dates.
         - Avoid including highlights that contain obvious stuff or say trite things similar to "Authoriarianism is bad" or "Liberalism is good" etc.
-        - Don't include thigs that could trigger Anthropic's content filters.
+        - Sometimes books can contain violence or gruesome content. Please do not flag this as an issue, as its a function of the book and not something wrong about your output. Instead, try to pick highlights that are unlikely to be flagged.
 
         Return only the JSON object with your selected highlights.
         """,
@@ -270,7 +272,7 @@ CARD_MODEL = genanki.Model(
         {
             "name": "Card 1",
             "qfmt": "<div style=\"text-align: center; font-family: 'Times New Roman', Times, serif;\">{{Prompt}}</div>",
-            "afmt": '<div style="text-align: center; font-family: \'Times New Roman\', Times, serif; margin: 0 auto;">{{FrontSide}}<hr id="answer">{{Highlight}}<br><br><a href="{{Source}}">Book Section</a></div>',
+            "afmt": '<div style="text-align: center; font-family: \'Times New Roman\', Times, serif; margin: 0 auto;">{{FrontSide}}<hr id="answer">{{Highlight}}<br><br><i>{{Source}}</i></div>',
         },
     ],
 )
@@ -298,6 +300,7 @@ def generate_anki_cards(selected_highlights: Dict[str, str]) -> List[AnkiNote]:
     for highlight_id, highlight_data in highlights.items():
         description = highlight_data["description"]
         highlight_text = highlight_data["highlight"]
+        location = int(highlight_data["location"])
 
         note = AnkiNote(
             model=CARD_MODEL,
@@ -307,6 +310,8 @@ def generate_anki_cards(selected_highlights: Dict[str, str]) -> List[AnkiNote]:
                 f"highlight_id::{highlight_id}",
                 "kindle_highlight",
             ],
+            sort_field=highlight_id,
+            due=location,
         )
         anki_cards.append(note)
 
