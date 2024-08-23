@@ -23,6 +23,7 @@ pip install -r requirements.txt
 ANTHROPIC_API_KEY=your_anthropic_api_key
 READWISE_TOKEN=your_readwise_token
 ```
+You can generate an Anthropic API key [here](https://console.anthropic.com/account/keys), and a Readwise API key [here](https://readwise.io/access_token).
 
 ## Usage
 
