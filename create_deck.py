@@ -11,14 +11,14 @@ def main(book_id: int, max_cards: int, deck_name: str = None):
     if book_id is None:
         raise ValueError("book_id must be provided. ")
     output_dir = "decks"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
     # Fetch all highlights from Readwise
     highlights, n_highlights = utils.fetch_highlights(book_id)
 
     # Get Claude to select highlights
-    selected_highlights = utils.select_highlights(
-        highlights, max_cards, n_highlights
-    )
+    selected_highlights = utils.select_highlights(highlights, max_cards, n_highlights)
 
     # Create Anki cards
     anki_cards = utils.generate_anki_cards(selected_highlights)
@@ -48,6 +48,7 @@ if __name__ == "__main__":
         "--book-id",
         "-id",
         type=int,
+        required=True,
         help="The ID of the book to generate Anki cards for. You can list the book ids in your Readwise account by running ./list_book_ids.py",
     )
 
@@ -55,13 +56,13 @@ if __name__ == "__main__":
         "--max-cards",
         "-m",
         type=int,
-        help="The maximum number of cards to generate. Defaults to 20. Note that if a book has fewer than 20 highlights, all of them will be generated.",
+        help="The maximum number of cards to generate. Defaults to 20. Note that if a book has fewer than 20 highlights, all of them will be selected.",
         default=20,
     )
     parser.add_argument(
         "--deck_name",
         type=str,
-        help="The title of the Anki deck to create. Defaults to the book title.",
+        help="The title of the Anki deck to create. Defaults to the book title and author.",
         default=None,
     )
 
