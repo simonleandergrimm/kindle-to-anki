@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from readwise import Readwise
 from typing import Dict, List
 
-DEBUG = True
+DEBUG = False
 
 
 def load_env_variables():
@@ -95,9 +95,7 @@ def show_metadata(book_id):
                         "num_highlights": book.num_highlights,
                         "source": book.source,
                         "document_note": book.document_note,
-                        "document_tag": ", ".join(
-                            tag.name for tag in book.tags
-                        ),
+                        "document_tag": ", ".join(tag.name for tag in book.tags),
                     },
                     indent=2,
                 )
