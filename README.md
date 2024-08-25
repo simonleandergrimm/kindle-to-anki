@@ -1,6 +1,6 @@
 # Creating Ankis based on your Kindle highlights
 
-Fetches Kindle highlights from Readwise, selects the most relevant highlights using Claude, and turns them into Anki cards. [Let me know](https://github.com/simonleandergrimm/kindle-to-anki/issues) if you find bugs or have ideas for improvement!
+Fetches Kindle highlights from Readwise, selects the most relevant excerpts using Claude Sonnet 3.5, and turns them into Anki cards. [Let me know](https://github.com/simonleandergrimm/kindle-to-anki/issues) if you find bugs or have ideas for improvement!
 
 ## Prerequisites
 
