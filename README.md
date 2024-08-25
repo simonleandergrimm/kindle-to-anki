@@ -1,6 +1,6 @@
 # Creating Ankis based on your Kindle highlights
 
-Fetches Kindle highlights from Readwise, selects the most relevant highlights using Claude, and turns them into Anki cards.
+Fetches Kindle highlights from Readwise, selects the most relevant highlights using Claude, and turns them into Anki cards. [Let me know](https://github.com/simonleandergrimm/kindle-to-anki/issues) if you find bugs or have ideas for improvement!
 
 ## Prerequisites
 
@@ -27,7 +27,7 @@ You can generate an Anthropic API key [here](https://console.anthropic.com/accou
 
 ## Usage
 
-To fetch a book's highlights from Readwise, you need to know its Readwise ID. To list all books and their IDs present in your Readwise account do:
+To fetch a book's highlights from Readwise, you need to know its Readwise ID. To list all books and their IDs present in your Readwise account, do:
 
 ```bash
 ./list_book_ids.py
@@ -41,7 +41,7 @@ Once you have the book ID, you can create an Anki deck.
 
 - `book_id`: The ID of the book in Readwise (required)
 - `max-cards`: Maximum number of cards to generate (default: 20)
-- `deck_name`: Name of the Anki deck to create (default: book title)
+- `deck_name`: Name of the Anki deck to create (default: {book title} ({author)
 
 ### Helper scripts
 
@@ -50,10 +50,3 @@ Once you have the book ID, you can create an Anki deck.
 ```bash
 ./show_metadata.py <book_id>
 ```
-
-## Project Structure
-
-- `create_deck.py`: Main script to generate Anki decks
-- `list_book_ids.py`: Script to list book IDs in your Readwise account
-- `utils.py`: Utility functions for fetching highlights, selecting relevant ones, and creating Anki cards
-
