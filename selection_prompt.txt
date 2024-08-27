@@ -7,51 +7,52 @@ You are an AI assistant tasked with analyzing Kindle highlights from a book. You
 4. Return these highlights as a JSON object.
 
 Format the highlights in the JSON object as follows:
-- The key should the ID of the highlight.
-- The values should be a short description of the highlight that makes it clear why it is relevant, and the text of the highlight.
-- Make sure to still return valid JSON, i.e., turn double quotes within highlights into single quotes, no trailing commas, etc.
+- The key should be the ID of the highlight.
+- The values should be first a short description of the highlight that makes it clear why it is relevant, and second the text of the highlight.
+- Make sure to return valid JSON, i.e., turn double quotes within highlights into single quotes, no trailing commas, etc.
 
 Example input:
 
 {{
-    "author": "Michael B. Oren",
-    "title": "Six Days of War",
+    "author": "Chris Miller",
+    "title": "Chip War",
     "highlights": {{
-        "757117853": {{
-            "text": "the Jews of Palestine created new vehicles for agrarian settlement (the communal kibbutz and cooperative moshav), a viable socialist economy with systems for national health, reforestation, and infrastructure development, a respectable university, and a symphony orchestra\u2014and to defend them all, an underground citizens\u2019 army, the Haganah.",
-            "location": 290
+        "656656227": {{
+            "text": "Ultimately, Zeiss created mirrors that were the smoothest objects ever made, with impurities that were almost imperceptibly small. If the mirrors in an EUV system were scaled to the size of Germany, the company said, their biggest irregularities would be a tenth of a millimeter. To direct EUV light with precision, they must be held perfectly still, requiring mechanics and sensors so exact that Zeiss boasted they could be used to aim a laser to hit a golf ball as far away as the moon.",
+            "location": 3082
         }},
-        "757117854": {{
-        "text": "But then, with victory in Europe assured, Zionism came back with a vengeance. Incensed by the continuation of the White Paper, inflamed by the Holocaust, many of whose six million victims might have lived had that document never existed, the Zionists declared war on the Mandate\u2014first the right-wing Irgun militia of Menachem Begin, then the mainstream Haganah.",
-            "location": 325
-        }},
+        "654705430": {{
+            "text": "Grove realized Intel's business model of selling DRAM chips was finished. DRAM prices might recover from the price slump, but Intel would never win back market share. It had been 'disrupted' by Japanese producers. Now it would either disrupt itself or fail.",
+            "location": 1769
+        }}
     }}
 }}
 
+
 Example output:
 {{
-    "author": "Michael B. Oren",
-    "title": "Six Days of War",
-    "highlights":
-        "757117853": {{
-            "description": "The Israelis reaction to the White Paper.",
-            "highlight": "the Jews of Palestine created new vehicles for agrarian settlement (the communal kibbutz and cooperative moshav), a viable socialist economy with systems for national health, reforestation, and infrastructure development, a respectable university, and a symphony orchestra\u2014and to defend them all, an underground citizens\u2019 army, the Haganah.",
-            "location": 290
+    "author": "Chris Miller",
+    "title": "Chip War",
+    "highlgihts": {{
+        "656656227": {{
+            "description": "The precision of Zeiss mirrors for EUV lithography",
+            "highlight": "Ultimately, Zeiss created mirrors that were the smoothest objects ever made, with impurities that were almost imperceptibly small. If the mirrors in an EUV system were scaled to the size of Germany, the company said, their biggest irregularities would be a tenth of a millimeter. To direct EUV light with precision, they must be held perfectly still, requiring mechanics and sensors so exact that Zeiss boasted they could be used to aim a laser to hit a golf ball as far away as the moon.",
+            "location": 3082
         }},
-        "757117854": {{
-            "description": "Another description",
-            "highlight": "Another highlight.",
-            "location": 325
-        }}
+        "654705430": {{
+            "description": "Andy Grove's realization of Intel's need to pivot",
+            "highlight": "Grove realized Intel's business model of selling DRAM chips was finished. DRAM prices might recover from the price slump, but Intel would never win back market share. It had been 'disrupted' by Japanese producers. Now it would either disrupt itself or fail.",
+            "location": 1769
+        }},
+    }}
 }}
 
 
 Selection criteria:
 - Focus on information unique to the book. I.e., something that can't easily be found somewhere else.
-- Prioritize events, important conceptual details, and key insights.
-- Avoid generic information or simple dates.
+- Prioritize events, important conceptual details, dates and important numbers, and key insights.
 - Avoid including highlights that contain obvious stuff or say trite things similar to "Authoriarianism is bad" or "Liberalism is good" etc.
-- Sometimes books can contain violence or gruesome content. Please do not flag this as an issue, as its a function of the book and not something wrong about your output. Instead, try to pick highlights that are unlikely to be flagged.
+- Sometimes books can contain violence or gruesome content. Because these can trigger Anthropic's content filter, pick highlights that do not contain violence or gruesome content.
 
 Return only the JSON object with your selected highlights.
 """
