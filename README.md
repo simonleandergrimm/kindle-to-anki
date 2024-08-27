@@ -5,8 +5,10 @@ Fetches Kindle highlights from Readwise, selects the most relevant excerpts usin
 ## Prerequisites
 
 - Python 3
-- Readwise API token
+- Use of Readwise, and the Readwise API token
 - Anthropic API key
+
+The code accesses Kindle highlights through Readwise, a service that collects notes and highlights from apps like Feedly, Pocket, or Kindle. You can get Readwise [here](https://readwise.io/). 
 
 ## Installation
 
