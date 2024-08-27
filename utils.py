@@ -154,11 +154,13 @@ def select_highlights(
     Returns:
         dict: Selected highlights with their IDs and a short description..
     """
+
     if DEBUG:
         if os.path.exists("test_highlight_selection.json"):
             with open("test_highlight_selection.json", "r") as f:
                 highlight_dict = json.load(f)
                 return highlight_dict
+
     if n_highlights <= max_cards:
         print(
             f"Number of highlights is smaller or equal to the number of desired cards, returning all highlights as Anki cards..."
@@ -166,67 +168,17 @@ def select_highlights(
     else:
         print(f"Selecting {max_cards} highlights out of {n_highlights}...")
     N_TOTAL = min(max_cards, n_highlights)
+
+    with open("selection_prompt.txt", "r") as promp_file:
+        prompt = promp_file.read()
+
+    formatted_prompt = prompt.format(N_TOTAL=N_TOTAL)
+
     try:
         response = anthropic_client.messages.create(
             model="claude-3-5-sonnet-20240620",
             max_tokens=8192,
-            system=f"""
-        You are an AI assistant tasked with analyzing Kindle highlights from a book. Your job is to:
-
-        1. Read through the provided Kindle highlights.
-        2. Pull out the author's name and the book title, and add them to the beginnning of the JSON object as "author" and "title" fields.
-        3. Select {N_TOTAL} highlights that are particularly relevant and unique to the book's content.
-        4. Return these highlights as a JSON object.
-
-        Format the highlights in the JSON object as follows:
-        - The key should the ID of the highlight.
-        - The values should be a short description of the highlight that makes it clear why it is relevant, and the text of the highlight.
-        - Make sure to still return valid JSON, i.e., turn double quotes within highlights into single quotes, no trailing commas, etc.
-
-        Example input:
-
-        {{
-            "author": "Michael B. Oren",
-            "title": "Six Days of War",
-            "highlights": {{
-                "757117853": {{
-                    "text": "the Jews of Palestine created new vehicles for agrarian settlement (the communal kibbutz and cooperative moshav), a viable socialist economy with systems for national health, reforestation, and infrastructure development, a respectable university, and a symphony orchestra\u2014and to defend them all, an underground citizens\u2019 army, the Haganah.",
-                    "location": 290
-                }},
-                "757117854": {{
-                "text": "But then, with victory in Europe assured, Zionism came back with a vengeance. Incensed by the continuation of the White Paper, inflamed by the Holocaust, many of whose six million victims might have lived had that document never existed, the Zionists declared war on the Mandate\u2014first the right-wing Irgun militia of Menachem Begin, then the mainstream Haganah.",
-                    "location": 325
-                }},
-            }}
-        }}
-
-        Example output:
-        {{
-            "author": "Michael B. Oren",
-            "title": "Six Days of War",
-            "highlights":
-                "757117853": {{
-                    "description": "The Israelis reaction to the White Paper.",
-                    "highlight": "the Jews of Palestine created new vehicles for agrarian settlement (the communal kibbutz and cooperative moshav), a viable socialist economy with systems for national health, reforestation, and infrastructure development, a respectable university, and a symphony orchestra\u2014and to defend them all, an underground citizens\u2019 army, the Haganah.",
-                    "location": 290
-                }},
-                "757117854": {{
-                    "description": "Another description",
-                    "highlight": "Another highlight.",
-                    "location": 325
-                }}
-        }}
-
-
-        Selection criteria:
-        - Focus on information unique to the book. I.e., something that can't easily be found somewhere else.
-        - Prioritize events, important conceptual details, and key insights.
-        - Avoid generic information or simple dates.
-        - Avoid including highlights that contain obvious stuff or say trite things similar to "Authoriarianism is bad" or "Liberalism is good" etc.
-        - Sometimes books can contain violence or gruesome content. Please do not flag this as an issue, as its a function of the book and not something wrong about your output. Instead, try to pick highlights that are unlikely to be flagged.
-
-        Return only the JSON object with your selected highlights.
-        """,
+            system=formatted_prompt,
             messages=[{"role": "user", "content": highlights}],
         )
     except anthropic.BadRequestError as e:
