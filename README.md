@@ -17,7 +17,7 @@ Fetches Kindle highlights from Readwise, selects the most relevant excerpts usin
 pip install -r requirements.txt
 ```
 
-3. Create a `.env` file and add your API keys:
+3. Copy [.env.example](.env.example), rename it to `.env`, and add your API keys:
 
 ```
 ANTHROPIC_API_KEY=your_anthropic_api_key
@@ -41,7 +41,13 @@ Once you have the book ID, you can create an Anki deck.
 
 - `book_id`: The ID of the book in Readwise (required)
 - `max-cards`: Maximum number of cards to generate (default: 20)
-- `deck_name`: Name of the Anki deck to create (default: {book title} ({author)
+- `deck_name`: Name of the Anki deck to create (default: {book title} ({author}))
+
+Anki decks are saved within the automatically generated `./decks` directory. Each created card has a unique identifier, based on its location in the book. Hence, if you create another set of cards for the same book deck, no duplicate cards should end up in your Anki library.
+
+## Customisation
+
+The prompt used by Claude is in a separate file, called [selection_prompt.txt](selection_prompt.txt). You can edit the prompt to give Claude different directions on which highlights is should prioritise. Note that editing the output format (e.g., adding variables to the JSON object) will likely break the code in [utils.py](utils.py).
 
 ### Helper scripts
 
