@@ -1,6 +1,6 @@
 anthropic
 genanki
-dotenv
+python-dotenv
 readwise
 click
 
