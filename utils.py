@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 from readwise import Readwise
 from typing import Dict, List
 
-DEBUG = False
-
 
 def load_env_variables():
     load_dotenv()
@@ -49,17 +47,15 @@ def get_books():
 
 
 def list_book_ids():
+    books = []
     for book in get_books():
-        click.echo(
-            json.dumps(
-                {
-                    "id": book.id,
-                    "title": book.title,
-                    "num_highlights": book.num_highlights,
-                },
-                indent=2,
-            )
-        )
+        books.append((book.title, book.id, book.num_highlights))
+
+    # Sort books by number of highlights in descending order
+    books.sort(key=lambda x: x[2], reverse=True)
+
+    for title, book_id, num_highlights in books:
+        print(f"{title}, ID: {book_id}, Number of highlights: {num_highlights}")
 
 
 def list_books():
@@ -142,6 +138,7 @@ def fetch_highlights(book_id):
 def select_highlights(
     highlights: str, max_cards: int, n_highlights: int, n_tries: int = 0
 ) -> dict:
+    MAX_TRIES = 3
     """
     Select a subset of highlights using Claude.
 
@@ -154,12 +151,11 @@ def select_highlights(
     Returns:
         dict: Selected highlights with their IDs and a short description..
     """
+    highlight_dict = json.loads(highlights)
+    highlight_id_dict = {}
 
-    if DEBUG:
-        if os.path.exists("test_highlight_selection.json"):
-            with open("test_highlight_selection.json", "r") as f:
-                highlight_dict = json.load(f)
-                return highlight_dict
+    for highlight_id, highlight_data in highlight_dict["highlights"].items():
+        highlight_id_dict[highlight_id] = highlight_data["text"]
 
     if n_highlights <= max_cards:
         print(
@@ -184,8 +180,8 @@ def select_highlights(
     except anthropic.BadRequestError as e:
         n_tries += 1
 
-        if n_tries > 2:
-            print("Content filter triggered 3 times, stopping script.")
+        if n_tries > MAX_TRIES:
+            print(f"Content filter triggered {MAX_TRIES} times, stopping script.")
             exit()
 
         print("Triggered Anthropic's content filter, retrying...")
@@ -202,10 +198,10 @@ def select_highlights(
 
     highlight_dict = json.loads(highlight_selection)
 
-    # Save highlight selection to skip Claude call when debugging.
-    if DEBUG:
-        with open("test_highlight_selection.json", "w") as f:
-            json.dump(highlight_dict, f, indent=4)
+    # Adding the original highlight text
+    for highlight_id, highlight_data in highlight_dict["highlights"].items():
+        if highlight_id in highlight_id_dict:
+            highlight_data["highlight"] = highlight_id_dict[highlight_id]
 
     return highlight_dict
 

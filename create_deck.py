@@ -7,7 +7,7 @@ import os
 from typing import Tuple, Dict, List
 
 
-def main(book_id: int, max_cards: int, deck_name: str = None):
+def main(book_id: int, n_cards: int, deck_name: str = None):
     if book_id is None:
         raise ValueError("book_id must be provided. ")
     output_dir = "decks"
@@ -18,15 +18,15 @@ def main(book_id: int, max_cards: int, deck_name: str = None):
     highlights, n_highlights = utils.fetch_highlights(book_id)
 
     # Get Claude to select highlights
-    selected_highlights = utils.select_highlights(highlights, max_cards, n_highlights)
+    highlight_dict = utils.select_highlights(highlights, n_cards, n_highlights)
 
     # Create Anki cards
-    anki_cards = utils.generate_anki_cards(selected_highlights)
+    anki_cards = utils.generate_anki_cards(highlight_dict)
 
     # Create Anki deck title
     if deck_name is None:
-        title = selected_highlights["title"]
-        author = selected_highlights["author"]
+        title = highlight_dict["title"]
+        author = highlight_dict["author"]
         deck_name = f"{title} ({author})"
 
     # Create Anki deck
@@ -53,10 +53,10 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--max-cards",
-        "-m",
+        "--n-cards",
+        "-n",
         type=int,
-        help="The maximum number of cards to generate. Defaults to 20. Note that if a book has fewer than 20 highlights, all of them will be selected.",
+        help="The number of cards to generate. Defaults to 20. Note that if a book has fewer than 20 highlights, all of them will be selected.",
         default=20,
     )
     parser.add_argument(
@@ -68,4 +68,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(args.book_id, args.max_cards, args.deck_name)
+    main(args.book_id, args.n_cards, args.deck_name)

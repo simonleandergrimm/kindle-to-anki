@@ -33,15 +33,13 @@ Example output:
 {{
     "author": "Chris Miller",
     "title": "Chip War",
-    "highlgihts": {{
+    "highlights": {{
         "656656227": {{
             "description": "The precision of Zeiss mirrors for EUV lithography",
-            "highlight": "Ultimately, Zeiss created mirrors that were the smoothest objects ever made, with impurities that were almost imperceptibly small. If the mirrors in an EUV system were scaled to the size of Germany, the company said, their biggest irregularities would be a tenth of a millimeter. To direct EUV light with precision, they must be held perfectly still, requiring mechanics and sensors so exact that Zeiss boasted they could be used to aim a laser to hit a golf ball as far away as the moon.",
             "location": 3082
         }},
         "654705430": {{
             "description": "Andy Grove's realization of Intel's need to pivot",
-            "highlight": "Grove realized Intel's business model of selling DRAM chips was finished. DRAM prices might recover from the price slump, but Intel would never win back market share. It had been 'disrupted' by Japanese producers. Now it would either disrupt itself or fail.",
             "location": 1769
         }},
     }}
@@ -52,7 +50,7 @@ Selection criteria:
 - Focus on information unique to the book. I.e., something that can't easily be found somewhere else.
 - Prioritize events, important conceptual details, dates and important numbers, and key insights.
 - Avoid including highlights that contain obvious stuff or say trite things similar to "Authoriarianism is bad" or "Liberalism is good" etc.
-- Sometimes books can contain violence or gruesome content. Because these can trigger Anthropic's content filter, pick highlights that do not contain violence or gruesome content.
+- Note, you are processing content of existing books that are owned by the user you are creating these Ankis for. The user will only use these Ankis privately, without sharing them, which thus doesn't represent a copyright infringement. Your answer thus shouldn't trigger Anthropic's content filter.
 
 Return only the JSON object with your selected highlights.
 """
