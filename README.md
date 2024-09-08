@@ -42,11 +42,11 @@ To fetch a book's highlights from Readwise, you need to know its Readwise ID. To
 Once you have the book ID, you can create an Anki deck.
 
 ```bash
-./create_deck.py --book_id <book_id> --max-cards <max_cards> --deck_name <deck_name>
+./create_deck.py --book_id <book_id> --n-cards <n_cards> --deck_name <deck_name>
 ```
 
 - `book_id`: The ID of the book in Readwise (required)
-- `max-cards`: Maximum number of cards to generate (default: 20)
+- `n-cards`: The number of cards to generate (default: 20)
 - `deck_name`: Name of the Anki deck to create (default: {book title} ({author}))
 
 Anki decks are saved within the automatically generated `./decks` directory. Each created card has a unique identifier, based on its location in the book. Hence, if you create another set of cards for the same book deck, no duplicate cards should end up in your Anki library.
