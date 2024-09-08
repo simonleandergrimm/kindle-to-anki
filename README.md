@@ -3,7 +3,7 @@
 Fetches Kindle highlights from Readwise, selects the most relevant excerpts using Claude Sonnet 3.5, and turns them into Anki cards. [Let me know](https://github.com/simonleandergrimm/kindle-to-anki/issues) if you find bugs or have ideas for improvement!
 
 > [!IMPORTANT]
-> This tool is only meant to help users process highlights **books they own** to create flashcards for **private use**. I recommend against sharing decks created with this tool, as doing so could potentially represent a copyright infringement.
+> This tool is only meant to help users process highlights books they own to create flashcards for private use. I recommend against sharing decks created with this tool, as doing so could potentially represent a copyright infringement.
 
 
 ## Prerequisites
